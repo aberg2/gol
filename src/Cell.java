@@ -4,26 +4,22 @@ public class Cell
 {
     public static void main(String[] args)
     {
-        int M = 10, N = 10;
+        int x = 7, y = 7;
 
-        // Intiliazing the grid. 
-        int[][] grid = { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 1, 1, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 1, 1, 0, 0, 0, 0, 0 },
-                { 0, 0, 1, 1, 0, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 0, 0, 1, 0, 0, 0, 0 },
-                { 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
+        int[][] grid = {
+                { 1, 0, 0, 1, 0, 0, 0},
+                { 1, 0, 0, 1, 0, 0, 0},
+                { 1, 0, 0, 1, 0, 0, 0},
+                { 1, 0, 0, 1, 0, 0, 0},
+                { 1, 0, 0, 1, 0, 0, 0},
+                { 1, 0, 0, 1, 0, 0, 0},
+                { 1, 0, 0, 1, 0, 0, 0}
         };
 
-        // Displaying the grid 
-        System.out.println("Original Generation");
-        for (int i = 0; i < M; i++)
+        System.out.println("första ");
+        for (int i = 0; i < x; i++)
         {
-            for (int j = 0; j < N; j++)
+            for (int j = 0; j < y; j++)
             {
                 if (grid[i][j] == 0)
                     System.out.print(".");
@@ -33,53 +29,47 @@ public class Cell
             System.out.println();
         }
         System.out.println();
-        nextGeneration(grid, M, N);
+        nextGeneration(grid, x, y);
     }
 
-    // Function to print next generation 
-    static void nextGeneration(int grid[][], int M, int N)
+    static void nextGeneration(int grid[][], int x, int y)
     {
-        int[][] future = new int[M][N];
+        int[][] future = new int[x][y];
 
-        // Loop through every cell 
-        for (int l = 1; l < M - 1; l++)
+        for (int l = 1; l < x - 1; l++)
         {
-            for (int m = 1; m < N - 1; m++)
+            for (int m = 1; m < y - 1; m++)
             {
-                // finding no Of Neighbours that are alive 
                 int aliveNeighbours = 0;
                 for (int i = -1; i <= 1; i++)
                     for (int j = -1; j <= 1; j++)
                         aliveNeighbours += grid[l + i][m + j];
 
-                // The cell needs to be subtracted from 
-                // its neighbours as it was counted before 
                 aliveNeighbours -= grid[l][m];
 
-                // Implementing the Rules of Life 
 
-                // Cell is lonely and dies 
+                // ensam cell
                 if ((grid[l][m] == 1) && (aliveNeighbours < 2))
                     future[l][m] = 0;
 
-                    // Cell dies due to over population
+                    // överpopulation
                 else if ((grid[l][m] == 1) && (aliveNeighbours > 3))
                     future[l][m] = 0;
 
-                    // A new cell is born
+                    // ny cell
                 else if ((grid[l][m] == 0) && (aliveNeighbours == 3))
                     future[l][m] = 1;
 
-                    // Remains the same
+                    // samma
                 else
                     future[l][m] = grid[l][m];
             }
         }
 
-        System.out.println("Next Generation");
-        for (int i = 0; i < M; i++)
+        System.out.println("andra");
+        for (int i = 0; i < x; i++)
         {
-            for (int j = 0; j < N; j++)
+            for (int j = 0; j < y; j++)
             {
                 if (future[i][j] == 0)
                     System.out.print(".");
